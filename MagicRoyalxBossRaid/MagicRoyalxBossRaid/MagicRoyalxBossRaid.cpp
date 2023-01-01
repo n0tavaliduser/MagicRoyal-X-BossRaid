@@ -96,7 +96,7 @@ int Player::getSkillCooldownOf(int index) { return Player::skillCooldown[index];
 
 // Method Show Player Detail START Here
 void Player::showPlayerDetail() {
-	cout << "================================" << endl;
+	cout << "==============================================" << endl;
 	cout << "Username\t: " << Player::getUsername() << endl;
 	cout << "Heroname\t: " << Player::getHeroname() << endl;
 	cout << "Health.Cap\t: " << Player::getHealthCapacity() << endl;
@@ -104,7 +104,7 @@ void Player::showPlayerDetail() {
 	cout << "Demage\t\t: " << Player::getDemage() << endl;
 	cout << "Defend\t\t: " << Player::getDefend() << endl;
 	cout << "Defend.Cap\t: " << Player::getDefendCapacity() << endl;
-	cout << "================================" << endl;
+	cout << "==============================================" << endl;
 	cout << "BLESSING : " << endl;
 	for (int i = 0; i < Player::blessing.size(); i++) {
 		cout << i + 1 << ". " << Player::blessing[i];
@@ -122,7 +122,7 @@ void Player::showPlayerDetail() {
 		}
 		cout << endl;
 	}
-	cout << "================================" << endl;
+	cout << "==============================================" << endl;
 }
 // Method Show Player Detail END Here
 
@@ -415,6 +415,19 @@ int main() {
 
 		// Show Intro Game
 		cout << "WELCOME TO MAGIC ROYAL!!!" << endl;
+		if (player1.getHealth() != player1.getHealthCapacity() || player2.getHealth() != player2.getHealthCapacity()) {
+			cout << "==============================================" << endl;
+			cout << "PEMENANG : ";
+			if (player1.getHealth() > player2.getHealth()) {
+				cout << player1.getUsername() << endl;
+			}
+			else if (player2.getHealth() > player1.getHealth()) {
+				cout << player2.getUsername() << endl;
+			}
+			else {
+				cout << "Belum ada pemenang" << endl;
+			}
+		}
 		cout << "Player 1 (Health : " << player1.getHealth() << ") = " << player1.getUsername() << endl;
 		cout << "Player 2 (Health : " << player2.getHealth() << ") = " << player2.getUsername() << endl;
 		cout << "MENU GAME : " << endl;
@@ -436,6 +449,10 @@ int main() {
 			bool isTurnDone = true;
 			for (int i = 0; i < 100; i++) {
 				system("cls");
+				// Cek apakah ada yang kalah H <= 0
+				if (player1.getHealth() <= 0 || player2.getHealth() <= 0) {
+					break;
+				}
 				string turn;
 				if (i % 2 == 0) {
 					turn = player1.getUsername();
@@ -595,6 +612,7 @@ int main() {
 						cout << "--> (" << i + 1 << ") " << player2.getSkillOf(i) << " (CD : " << skillCooldownP2[i] << ")" << endl;
 					}
 				}
+				cout << "0. Exit Battle" << endl;
 				char action;
 				cout << "SELECT Action --> ";
 				cin >> action;
@@ -651,6 +669,17 @@ int main() {
 						}
 					}
 					system("pause");
+				}
+				else if (action == '0') {
+					string confirm;
+					cout << "Yakin ingin berhenti ? (Y/n) --> " << endl;
+					cin >> confirm;
+					if (confirm == "Y" || confirm == "y") {
+						break;
+					}
+					else {
+						i = i + 1;
+					}
 				}
 			}
 		}
